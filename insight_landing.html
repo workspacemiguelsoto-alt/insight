@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Insight · Dr. Miguel Soto</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bk:#030707;
+  --bg:#A19487;
+  --bgl:#C4B8AE;
+  --bgd:#6B5E55;
+  --wh:#F4F2F1;
+  --s1:#1C1F1F;
+  --s2:#151818;
+  --t1:#E8E4E0;
+  --t2:#9E958C;
+  --t3:#5C5550;
+  --b1:rgba(161,148,135,0.15);
+  --b2:rgba(161,148,135,0.3);
+}
+
+html,body{
+  height:100%;
+  background:var(--bk);
+  color:var(--t1);
+  font-family:'Jost',sans-serif;
+  font-weight:300;
+  overflow-x:hidden;
+}
+
+/* BACKGROUND TEXTURE */
+body::before{
+  content:'';
+  position:fixed;
+  inset:0;
+  background:
+    radial-gradient(ellipse 80% 60% at 20% 80%, rgba(161,148,135,0.04) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 80% 20%, rgba(161,148,135,0.03) 0%, transparent 50%);
+  pointer-events:none;
+  z-index:0;
+}
+
+/* GRID LINES */
+body::after{
+  content:'';
+  position:fixed;
+  inset:0;
+  background-image:
+    linear-gradient(rgba(161,148,135,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(161,148,135,0.03) 1px, transparent 1px);
+  background-size:80px 80px;
+  pointer-events:none;
+  z-index:0;
+}
+
+.wrap{
+  position:relative;
+  z-index:1;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+}
+
+/* TOP BAR */
+.topbar{
+  padding:28px 40px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  border-bottom:.5px solid var(--b1);
+  animation:fadeDown .8s ease both;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:16px;
+}
+
+.brand-mark{
+  width:32px;
+  height:32px;
+}
+
+.brand-text{
+  font-size:9px;
+  letter-spacing:.28em;
+  color:var(--bgl);
+  text-transform:uppercase;
+  font-weight:400;
+}
+
+.brand-sub{
+  font-size:9px;
+  color:var(--t3);
+  letter-spacing:.14em;
+  margin-top:2px;
+}
+
+.topbar-right{
+  font-size:9px;
+  letter-spacing:.2em;
+  color:var(--t3);
+  text-transform:uppercase;
+}
+
+/* HERO */
+.hero{
+  flex:1;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:60px 40px;
+}
+
+.hero-inner{
+  max-width:640px;
+  width:100%;
+  text-align:center;
+}
+
+.eyebrow{
+  font-size:9px;
+  letter-spacing:.32em;
+  color:var(--bgd);
+  text-transform:uppercase;
+  margin-bottom:24px;
+  animation:fadeUp .8s ease .2s both;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:12px;
+}
+
+.eyebrow::before,.eyebrow::after{
+  content:'';
+  width:40px;
+  height:.5px;
+  background:var(--bgd);
+}
+
+.headline{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(48px,8vw,80px);
+  font-weight:300;
+  color:var(--bgl);
+  line-height:1;
+  letter-spacing:-.01em;
+  margin-bottom:8px;
+  animation:fadeUp .8s ease .35s both;
+}
+
+.headline em{
+  font-style:italic;
+  color:var(--bg);
+}
+
+.subheadline{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(16px,2.5vw,20px);
+  font-weight:300;
+  font-style:italic;
+  color:var(--t3);
+  margin-bottom:48px;
+  letter-spacing:.04em;
+  animation:fadeUp .8s ease .45s both;
+}
+
+/* DIVIDER */
+.divider{
+  display:flex;
+  align-items:center;
+  gap:16px;
+  margin-bottom:48px;
+  animation:fadeUp .8s ease .55s both;
+}
+.divider-line{flex:1;height:.5px;background:var(--b1)}
+.divider-mark{
+  font-size:9px;
+  letter-spacing:.2em;
+  color:var(--t3);
+  text-transform:uppercase;
+}
+
+/* ACCESS BUTTON */
+.access-wrap{
+  animation:fadeUp .8s ease .65s both;
+  margin-bottom:40px;
+}
+
+.btn-access{
+  display:inline-flex;
+  align-items:center;
+  gap:14px;
+  padding:16px 36px;
+  background:transparent;
+  border:.5px solid var(--bg);
+  color:var(--bg);
+  font-family:'Jost',sans-serif;
+  font-size:11px;
+  font-weight:400;
+  letter-spacing:.24em;
+  text-transform:uppercase;
+  text-decoration:none;
+  cursor:pointer;
+  transition:all .3s;
+  position:relative;
+  overflow:hidden;
+}
+
+.btn-access::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:var(--bg);
+  transform:scaleX(0);
+  transform-origin:left;
+  transition:transform .3s ease;
+  z-index:0;
+}
+
+.btn-access:hover::before{transform:scaleX(1)}
+
+.btn-access span,.btn-access svg{
+  position:relative;
+  z-index:1;
+  transition:color .3s;
+}
+
+.btn-access:hover span{color:var(--bk)}
+.btn-access:hover svg path{stroke:var(--bk)}
+
+.btn-access svg{
+  width:16px;
+  height:16px;
+  flex-shrink:0;
+}
+
+/* MODULES */
+.modules{
+  display:flex;
+  gap:1px;
+  justify-content:center;
+  flex-wrap:wrap;
+  animation:fadeUp .8s ease .75s both;
+}
+
+.module{
+  padding:8px 16px;
+  border:.5px solid var(--b1);
+  font-size:9px;
+  letter-spacing:.16em;
+  color:var(--t3);
+  text-transform:uppercase;
+  transition:border-color .2s, color .2s;
+}
+
+.module:hover{
+  border-color:var(--b2);
+  color:var(--t2);
+}
+
+/* FOOTER */
+.footer{
+  padding:24px 40px;
+  border-top:.5px solid var(--b1);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  animation:fadeUp .8s ease .85s both;
+}
+
+.footer-left{
+  font-size:9px;
+  letter-spacing:.14em;
+  color:var(--t3);
+  text-transform:uppercase;
+}
+
+.footer-right{
+  font-family:'Cormorant Garamond',serif;
+  font-size:12px;
+  font-style:italic;
+  color:var(--bgd);
+  letter-spacing:.04em;
+}
+
+/* CORNER MARKS */
+.corner{
+  position:fixed;
+  width:20px;
+  height:20px;
+  z-index:2;
+  opacity:.3;
+}
+.corner-tl{top:16px;left:16px;border-top:.5px solid var(--bg);border-left:.5px solid var(--bg)}
+.corner-tr{top:16px;right:16px;border-top:.5px solid var(--bg);border-right:.5px solid var(--bg)}
+.corner-bl{bottom:16px;left:16px;border-bottom:.5px solid var(--bg);border-left:.5px solid var(--bg)}
+.corner-br{bottom:16px;right:16px;border-bottom:.5px solid var(--bg);border-right:.5px solid var(--bg)}
+
+/* PULSE DOT */
+.pulse-wrap{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  font-size:9px;
+  letter-spacing:.16em;
+  color:var(--t3);
+  text-transform:uppercase;
+  margin-bottom:32px;
+  animation:fadeUp .8s ease .55s both;
+}
+
+.pulse{
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  background:var(--bg);
+  position:relative;
+}
+
+.pulse::after{
+  content:'';
+  position:absolute;
+  inset:-3px;
+  border-radius:50%;
+  border:.5px solid var(--bg);
+  animation:pulse 2s ease infinite;
+}
+
+/* ANIMATIONS */
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(16px)}
+  to{opacity:1;transform:translateY(0)}
+}
+@keyframes fadeDown{
+  from{opacity:0;transform:translateY(-10px)}
+  to{opacity:1;transform:translateY(0)}
+}
+@keyframes pulse{
+  0%{transform:scale(1);opacity:.8}
+  100%{transform:scale(2.5);opacity:0}
+}
+
+/* MOBILE */
+@media(max-width:600px){
+  .topbar{padding:20px 20px}
+  .hero{padding:40px 20px}
+  .footer{padding:20px;flex-direction:column;gap:8px;text-align:center}
+  .modules{gap:4px}
+}
+</style>
+</head>
+<body>
+
+<div class="corner corner-tl"></div>
+<div class="corner corner-tr"></div>
+<div class="corner corner-bl"></div>
+<div class="corner corner-br"></div>
+
+<div class="wrap">
+
+  <!-- TOP BAR -->
+  <header class="topbar">
+    <div class="brand">
+      <svg class="brand-mark" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M18 6C18 6 24 10 24 16C24 22 18 26 16 26" stroke="#A19487" stroke-width="1" stroke-linecap="round" fill="none"/>
+        <path d="M16 26C14 26 8 22 8 16C8 10 14 6 16 6" stroke="#A19487" stroke-width="1" stroke-linecap="round" fill="none"/>
+        <path d="M12 11L20 11" stroke="#A19487" stroke-width=".8" stroke-linecap="round"/>
+        <path d="M10 16L22 16" stroke="#A19487" stroke-width=".8" stroke-linecap="round"/>
+        <path d="M12 21L20 21" stroke="#A19487" stroke-width=".8" stroke-linecap="round"/>
+      </svg>
+      <div>
+        <div class="brand-text">Dr. Miguel Soto</div>
+        <div class="brand-sub">Cirujano Plástico Certificado</div>
+      </div>
+    </div>
+    <div class="topbar-right">insight.miguelsotomd.com</div>
+  </header>
+
+  <!-- HERO -->
+  <main class="hero">
+    <div class="hero-inner">
+
+      <div class="eyebrow">Sistema de Excelencia Operativa™</div>
+
+      <h1 class="headline">Insight<em>™</em></h1>
+
+      <p class="subheadline">Medición de Impacto, No de Esfuerzo</p>
+
+      <div class="divider">
+        <div class="divider-line"></div>
+        <div class="divider-mark">Acceso autorizado</div>
+        <div class="divider-line"></div>
+      </div>
+
+      <div class="pulse-wrap">
+        <div class="pulse"></div>
+        Sistema activo
+      </div>
+
+      <div class="access-wrap">
+        <!-- REEMPLAZA LA URL CON TU URL DE GOOGLE APPS SCRIPT -->
+        <a href="https://script.google.com/macros/s/AKfycbyVHr3Tm_n096GXoEXu1Wc4P8dLO5zW2Dxg-dQMiRO9KU_x-a2jPsib1QcK_pdx89SpBw/exec" class="btn-access" target="_blank">
+          <span>Acceder al sistema</span>
+          <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="#A19487" stroke-width=".8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+
+      <div class="modules">
+        <div class="module">Daily Debrief™</div>
+        <div class="module">Dashboard</div>
+        <div class="module">Mi Tablero</div>
+        <div class="module">Weekly Review™</div>
+        <div class="module">Incidencias</div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-left">Sistema de Excelencia Operativa™ · v1.0</div>
+    <div class="footer-right">La claridad protege. El sistema libera.</div>
+  </footer>
+
+</div>
+
+</body>
+</html>
